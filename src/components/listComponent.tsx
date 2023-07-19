@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import ButtonComponent from './buttonComponent';
 
 interface listProps {
-    children: any,
-    onClickDelete: () => void,
-    onCheck: () => void,
+    children: any
+    onClickDelete: () => void
+    onCheck: () => void
     isChecked: boolean
+    isDarkTheme: boolean
 }
 
     const Span = styled.span`
@@ -14,10 +15,9 @@ interface listProps {
         overflow-wrap: break-word;
     `
 
-const ListComponent = ({ children, onClickDelete, onCheck, isChecked }: listProps) => {
-
-    const Label = styled.label`
-    background-color: ${isChecked ? 'rgba(6, 155, 26, 0.479)' : '' };
+    const Label = styled.label<{ $isChecked: boolean, $isDarkTheme: boolean }>`
+    background-color: ${props => props.$isChecked ? 'rgba(6, 155, 26, 0.479)' : '' };
+    color: ${props => props.$isDarkTheme ? 'white' : 'black' };
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,11 +27,13 @@ const ListComponent = ({ children, onClickDelete, onCheck, isChecked }: listProp
     cursor: pointer;
 `
 
+const ListComponent = ({ children, onClickDelete, onCheck, isChecked, isDarkTheme }: listProps) => {
+
   return (
-        <Label>
+        <Label $isChecked={isChecked} $isDarkTheme={isDarkTheme}>
             <input type="checkbox" name="cb" defaultChecked={isChecked} onChange={onCheck} />
             <Span>{children}</Span>
-            <ButtonComponent onClick={onClickDelete} title="Удалить" primary />
+            <ButtonComponent onClick={onClickDelete} title="Удалить" isDarkTheme={isDarkTheme} />
         </Label>
   );
 }

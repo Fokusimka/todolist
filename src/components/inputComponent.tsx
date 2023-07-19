@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -7,8 +7,9 @@ const Block = styled.div`
   align-items: center;
 `
 
-const Input = styled.textarea`
-    background-color: bisque;
+const Input = styled.textarea<{ $isDarkTheme: boolean }>`
+    background-color: ${props => props.$isDarkTheme ? 'black' : 'bisque' } ;
+    color: ${props => props.$isDarkTheme ? 'white' : 'black'};
     border: 1px grey solid;
     border-radius: 10px;
     padding: 2px 5px;
@@ -20,21 +21,28 @@ const Input = styled.textarea`
 
 `;
 
+const Span = styled.span<{ $isDarkTheme: boolean }>`
+  color: ${props => props.$isDarkTheme ? 'white' : 'black'}
+`
+
+
 interface InputProps {
     text: string,
     setText: (state: string) => void
+    isDarkTheme: boolean
 }
 
 
 
 
-const InputComponent = ({ text, setText }: InputProps ) => {
+const InputComponent = ({ text, setText, isDarkTheme }: InputProps ) => {
   return (
     <Block>
-      <span>Добавить задачу: </span>
+      <Span $isDarkTheme={isDarkTheme}>Добавить задачу: </Span>
       <Input 
           placeholder='Введите текст задачи'
           onChange={(e: any) => setText(e.target.value)}
+          $isDarkTheme={isDarkTheme}
       >
       </Input>
     </Block>

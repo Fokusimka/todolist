@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components';
 
-    const Block = styled.div`
+    const Block = styled.div<{ $isDarkTheme: boolean }>`
         display: flex;
         flex-direction: column;
+        color: ${props => props.$isDarkTheme ? 'white' : 'black'};
     `
     const Span = styled.span`
         padding-left: 20px
@@ -16,18 +17,17 @@ import styled from 'styled-components';
     interface radioBoxProps {
         value: string;
         setValue: (e: any) => void
+        isDarkTheme: boolean
     }
 
-const RadioBoxComponent = ({ value, setValue }: radioBoxProps) => {
-
-    
+const RadioBoxComponent = ({ value, setValue, isDarkTheme }: radioBoxProps) => {    
    
     function chengeValue(e: any) {
        setValue(e.target.value);
     }
 
     return (
-        <Block>
+        <Block $isDarkTheme={isDarkTheme}>
             <Span>Показать</Span>
                 <Label>
                     <input 
